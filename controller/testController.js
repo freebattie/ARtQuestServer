@@ -8,3 +8,17 @@ export const getUserFromTestTable = async (req, res) => {
     return res.json(rows);
   }
 };
+
+export const getAllUsersFromTestTable = async (req, res) => {
+  if (!req.user) {
+    return res.sendStatus(404);
+  }
+  const { role } = req.user;
+  if (role != "admin") {
+    return res.sendStatus(401);
+  }
+  const { rows } = await TestService.getAllUsersFromTestTable();
+  if (rows) {
+    return res.json(rows);
+  }
+};

@@ -7,4 +7,12 @@ export default class TestService {
       console.log("getUserFromTestTable error: ", error);
     }
   };
+
+  static getAllUsersFromTestTable = async () => {
+    try {
+      return await db.query("Select * from test", []);
+    } catch (error) {
+      console.log("getUserFromTestTable error: ", error);
+    }
+  };
 }

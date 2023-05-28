@@ -15,8 +15,8 @@ import cookies from "cookie-parser";
 const app = express();
 app.use(bodyParser.json({ type: "*/*" }));
 
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(cookies());
+//app.use(express.static(path.join(__dirname, "/public"))); If we want to sent img etc from server
+app.use(cookies(process.env.COOKIE_SECRET));
 routes(app);
 
 // Server Setup
