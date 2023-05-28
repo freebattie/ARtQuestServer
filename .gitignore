@@ -1,1 +1,5 @@
 .env
+**/node_modules
+node_modules/body-parser/README.md
+node_modules/body-parser/README.md
+node_modules/body-parser/HISTORY.md
