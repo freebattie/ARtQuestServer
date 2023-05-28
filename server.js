@@ -14,7 +14,7 @@ import bodyParser from "body-parser";
 import cookies from "cookie-parser";
 const app = express();
 app.use(bodyParser.json({ type: "*/*" }));
-app.use(cors(corsOptions));
+
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(cookies());
 routes(app);
