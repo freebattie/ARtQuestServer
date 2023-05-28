@@ -15,9 +15,11 @@ export const login = async (req, res) => {
   if (userName === "" || password === "") {
     return res.sendStatus(403);
   }
-  const { rows } = await LoginService.loginUser(userName, password);
-  console.log(rows.username);
-  res.cookie("userName", rows[0].username, { signed: true });
+  console.log();
+  const user = userName.toLowerCase();
+  const { rows } = await LoginService.loginUser(user, password.toLowerCase());
+  console.log(rows);
+  res.cookie("userName", rows[0].userName, { signed: true });
   res.cookie("role", rows[0].role, { signed: true });
   res.sendStatus(200);
 };
