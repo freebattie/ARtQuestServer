@@ -1,8 +1,8 @@
 # ARtQuestServer
 
 - steg 1 skriv "npm i" inne i foldern
-- seg 2 rename .env(template) til kun .env
-- seg 3 fyll inn feltene i .env med dine passord, port osv, pass på at den er gitignora.
+- steg 2 rename .env(template) til kun .env
+- steg 3 fyll inn feltene i .env med dine passord, port osv, pass på at den er gitignora.
 - steg 4 lag en database med pgadmin eller kommando linja, samme navn som du skriver i .env filen
 - steg 5 kopier scriptet fra db/sql/create.sql inn i pgadmin slik tabellene blir laget eller gjør det fra commandolinje eller editoren din
 - steg 6 kopier scriptet fra db/sql/dataset.sql å gjør det samme som over, den inneholder litt dummy data å en "User" tabel.
