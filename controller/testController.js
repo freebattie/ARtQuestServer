@@ -1,4 +1,4 @@
-import TestService from "../services/testService.js";
+import TestService from "../services/TestService.js";
 
 export const getUserFromTestTable = async (req, res) => {
   const id = req.params.id; //get id from url

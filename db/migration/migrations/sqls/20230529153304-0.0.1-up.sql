@@ -1,0 +1,22 @@
+DROP SCHEMA IF EXISTS "ARtQuest";
+CREATE SCHEMA "ARtQuest";
+
+DROP TABLE IF EXISTS "Test";
+DROP TABLE IF EXISTS "User";
+
+CREATE TABLE "ARtQuest"."Test"
+(
+    Id        SMALLSERIAL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName  VARCHAR(255) NOT NULL,
+    CONSTRAINT TestPK PRIMARY KEY (Id)
+);
+
+CREATE TABLE "ARtQuest"."User"
+(
+    Id       SMALLSERIAL,
+    userName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role     VARCHAR(255) NOT NULL,
+    CONSTRAINT UserPK PRIMARY KEY (Id)
+);
