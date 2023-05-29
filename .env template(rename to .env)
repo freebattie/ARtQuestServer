@@ -4,4 +4,4 @@ DB_PASSWORD=yourdbpassword
 DB_NAME=yourDbServerName
 DB_PORT=Your db port
 PORT=3000(change if you have issues)
-SECRET=enTilfeldigLangString
+COOKIE_SECRET=enTilfeldigLangString
