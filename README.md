@@ -12,3 +12,4 @@
 - steg 10 (skip hvis du ikke kan med postman)hvis du kan med postman så kan du også teste login det er på localhost/api/login å send med i body {"userName": "test","password":"test"}
 - steg 11 (skip hvis du ikke skjønte steg 10)gå til  localhost/api/test, hvis du er logga inn får du alle test dataen, hvis du ikke er logga inn så får du en 400 feilmelding, for å "loggeut" så må du slette cokien - med rolle og userName
 - steg 12 hvis du fekk til steg 1 til 9(11) så e det berre å lage seg en eien branch å leike seg.
+---
