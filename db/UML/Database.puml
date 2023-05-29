@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class users {
+PK string email
+}
+
+@enduml
