@@ -1,0 +1,7 @@
+DB_HOST=127.0.0.1
+DB_USER=postgres
+DB_PASSWORD=yourdbpassword
+DB_NAME=yourDbServerName
+DB_PORT=Your db port
+PORT=3000(change if you have issues)
+COOKIE_SECRET=enTilfeldigLangString
