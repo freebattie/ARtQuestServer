@@ -11,7 +11,7 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT || 5432,
 });
-
+console.log(pool)
 const query = (text, params) => pool.query(text, params);
 
 export { query };

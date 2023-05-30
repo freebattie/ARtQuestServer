@@ -1,18 +1,18 @@
 {
-  "name": "artquestserver",
+  "name": "db-migration",
   "version": "1.0.0",
-  "description": "server backend for ARtQuest app",
-  "main": "server.js",
+  "description": "Tool to migrate new SQL to db",
+  "main": "",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.3.0",
-    "db-migrate-postgres": "^1.2.3"
+    "db-migrate-postgres": "^1.2.3",
+    "dotenv": "^16.0.3"
   }
 }

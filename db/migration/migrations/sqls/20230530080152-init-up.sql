@@ -1,10 +1,7 @@
-DROP SCHEMA IF EXISTS "ARtQuest";
-CREATE SCHEMA "ARtQuest";
+DROP TABLE IF EXISTS test;
+DROP TABLE IF EXISTS Users;
 
-DROP TABLE IF EXISTS "Test";
-DROP TABLE IF EXISTS "User";
-
-CREATE TABLE "ARtQuest"."Test"
+CREATE TABLE test
 (
     Id        SMALLSERIAL,
     firstName VARCHAR(255) NOT NULL,
@@ -12,11 +9,15 @@ CREATE TABLE "ARtQuest"."Test"
     CONSTRAINT TestPK PRIMARY KEY (Id)
 );
 
-CREATE TABLE "ARtQuest"."User"
+CREATE TABLE users
 (
     Id       SMALLSERIAL,
     userName VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role     VARCHAR(255) NOT NULL,
-    CONSTRAINT UserPK PRIMARY KEY (Id)
+    CONSTRAINT UsersPK PRIMARY KEY (Id)
 );
+
+INSERT INTO test (firstname, lastname)
+VALUES ('Ola', 'Nordmann'),
+       ('Kari', 'Nordmann');
