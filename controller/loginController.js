@@ -13,11 +13,16 @@ export const requestUser = async (req, res, next) => {
 export const login = async (req, res) => {
   const { userName, password } = req.body;
   if (userName === "" || password === "") {
-    return res.sendStatus(403);
+    return res.sendStatus(400);
   }
-  const { rows } = await LoginService.loginUser(userName, password);
-  console.log(rows.username);
-  res.cookie("userName", rows[0].username, { signed: true });
+
+  const user = userName.toLowerCase();
+  const { rows } = await LoginService.loginUser(user, password);
+
+  if (rows.length < 1) {
+    res.sendStatus(404);
+  }
+  res.cookie("userName", rows[0].userName, { signed: true });
   res.cookie("role", rows[0].role, { signed: true });
   res.sendStatus(200);
 };
