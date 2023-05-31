@@ -13,6 +13,7 @@
 - steg 11 (skip hvis du ikke skjønte steg 10)gå til  localhost/api/test, hvis du er logga inn får du alle test dataen, hvis du ikke er logga inn så får du en 400 feilmelding, for å "loggeut" så må du slette cokien - med rolle og userName
 - steg 12 hvis du fekk til steg 1 til 9(11) så e det berre å lage seg en eien branch å leike seg.
 
+
 # Database migration tool
 Tool to help everyone to have same setup for DB with easy terminal commando.
 You need a copy of your .env file from root to this location = "db/migration"
@@ -25,4 +26,3 @@ First time setup run this command:
 To update database with new SQL updates == "npm run db-migrate"
 
 To reset database == "npm run db-reset"
-=======
