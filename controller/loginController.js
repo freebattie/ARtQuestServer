@@ -17,8 +17,9 @@ export const login = async (req, res) => {
   }
 
   const user = userName.toLowerCase();
+  console.log(user,password);
   const { rows } = await LoginService.loginUser(user, password);
-
+  
   if (rows.length < 1) {
     return res.sendStatus(404);
   }
