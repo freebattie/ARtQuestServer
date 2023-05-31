@@ -6,13 +6,19 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "db-install": "cd db/migration && npm install",
+    "db-migrate": "cd db/migration && npx db-migrate up;",
+    "db-reset": "cd db/migration && npx db-migrate down;"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.3.0",
+    "db-migrate-postgres": "^1.2.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.22",

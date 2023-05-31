@@ -1,0 +1,13 @@
+{
+  "defaultEnv": "pg",
+  "pg": {
+    "driver": "postgres",
+    "user": "postgres",
+    "password": {"ENV": "DB_PASSWORD"},
+    "database": {"ENV": "DB_NAME"},
+    "host": {"ENV": "DB_HOST"},
+    "port": {"ENV": "DB_PORT"},
+    "schema": "public"
+  },
+  "sql-file": true
+}
