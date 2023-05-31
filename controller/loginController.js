@@ -20,9 +20,13 @@ export const login = async (req, res) => {
   const { rows } = await LoginService.loginUser(user, password);
 
   if (rows.length < 1) {
-    res.sendStatus(404);
+    return res.sendStatus(404);
   }
+  else {
+    
   res.cookie("userName", rows[0].userName, { signed: true });
   res.cookie("role", rows[0].role, { signed: true });
-  res.sendStatus(200);
+  return res.sendStatus(200);
+}
+  
 };
