@@ -1,8 +1,59 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+users -- usergallery
+usergallery -- questrewards
+users --- questprogression
+
+quests -- questitems
+questitems -- questprogression
+
+
 class users {
-PK string email
+    int - user_id
+    string - email
+    string - username
+    string - password
+    string - role
+    PK user_id()
+}
+
+class usergallery {
+    int - user_id
+    int - reward_id
+
+    PK user_id()
+    PK FK reward_id()
+}
+
+class quests {
+    int - quest_id
+    string - galleryname
+    string - gallerydescription
+    int - itemcount
+    PK quest_id()
+}
+
+class questrewards {
+    int - reward_id
+    string - picturename
+    string - picturedescription
+    PK reward_id()
+}
+
+class questitems {
+    int - item_id
+    int - guest_id
+
+    PK item_id()
+    FK quest_id()
+}
+
+class questprogression {
+    int - user_id
+    int - item_id
+    PK FK user_id()
+    PK FK item_id()
 }
 
 @enduml
