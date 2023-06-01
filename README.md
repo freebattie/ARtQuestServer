@@ -14,7 +14,7 @@
 - steg 12 hvis du fekk til steg 1 til 9(11) så e det berre å lage seg en eien branch å leike seg.
 
 
-# Database migration tool
+## Database migration tool
 Tool to help everyone to have same setup for DB with easy terminal commando.
 You need a copy of your .env file from root to this location = "db/migration"
 If you dont add this file here it wont work!!!
@@ -26,3 +26,12 @@ First time setup run this command:
 To update database with new SQL updates == "npm run db-migrate"
 
 To reset database == "npm run db-reset"
+
+### How to add a migration
+
+First navigate to db/migration in a terminal and run `npx db-migrate create <name> --sql-file` where \<name\> is an arbitrary title for the migration.
+
+The command will create three new file:
+   `db/migration/migrations/<number>-init.js` - Don't touch this file
+   `db/migration/migrations/sqls/<number>-init-up.sql` - Write how to apply the migration
+   `db/migration/migrations/sqls/<number>-init-down.sql` - Write how to remove the migration
