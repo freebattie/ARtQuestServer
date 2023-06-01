@@ -9,7 +9,7 @@
     "dev": "nodemon server.js",
     "db-install": "cd db/migration && npm install",
     "db-migrate": "cd db/migration && npx db-migrate up;",
-    "db-reset": "cd db/migration && npx db-migrate down;"
+    "db-reset": "cd db/migration && npx db-migrate reset;"
   },
   "author": "",
   "license": "ISC",
