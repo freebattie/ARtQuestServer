@@ -8,7 +8,7 @@ export default class LoginService {
    * return    db.row with user info*/
    static requestUser = async (username) => {
       try {
-         return await db.query("Select * from Users where username = $1", [
+         return await db.query("Select * from Users where email = $1", [
             username,
          ]);
       } catch (error) {
@@ -19,10 +19,8 @@ export default class LoginService {
    /* Check if user */
    static loginUser = async (username, password) => {
       try {
-         const hash = Hash.pbkdf2(password);
-
          var result = await db.query(
-            "Select * from Users where userName = $1 AND password = $2",
+            "Select * from Users where email = $1 AND password = $2",
             [username, password]
          );
 
