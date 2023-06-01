@@ -25,7 +25,7 @@ app.use(async (req, res, next) => {
 routes(app);
 
 // Server Setup
-const port = process.env.PORT || 4050;
+const port = process.env.PORT || 4030;
 const server = http.createServer(app);
 server.listen(port);
 console.log("Server listing on port ", port);

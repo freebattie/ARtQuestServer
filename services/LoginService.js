@@ -18,7 +18,7 @@ export default class LoginService {
    /* Normal login check
    * PARA1     string username
    * PARA2     string password
-   * return    ???*/
+   * return    db.row with one or zero user */
    static loginUser = async (username, password) => {
       try {
          var result = await db.query(
