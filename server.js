@@ -17,10 +17,15 @@ app.use(bodyParser.json({ type: "*/*" }));
 
 //app.use(express.static(path.join(__dirname, "/public"))); If we want to sent img etc from server
 app.use(cookies(process.env.COOKIE_SECRET));
+app.use(async (req, res, next) => {
+  console.log(`${req.ip}: ${req.method} ${req.url}`);
+  next();
+  console.log(`${req.ip}: ${res.statusCode}`);
+});
 routes(app);
 
 // Server Setup
-const port = process.env.PORT || 4050;
+const port = process.env.PORT || 4030;
 const server = http.createServer(app);
 server.listen(port);
 console.log("Server listing on port ", port);
