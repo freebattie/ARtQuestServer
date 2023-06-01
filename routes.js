@@ -15,9 +15,14 @@ const routes = (app) => {
 
   // Quest routes
   app.route(QUESTAPI)
-    .all(LoginController.requestUser)
-    .get(QuestController.getAllQuests)
-    .post(QuestController.updateQuest)
+    .get(
+      LoginController.requestUser,
+      QuestController.getAllQuests
+    )
+    .post(
+      LoginController.requestUser,
+      QuestController.updateQuest
+    )
     ;
 
 
