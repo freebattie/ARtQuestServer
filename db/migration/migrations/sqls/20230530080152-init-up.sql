@@ -9,15 +9,20 @@ CREATE TABLE test
     CONSTRAINT TestPK PRIMARY KEY (Id)
 );
 
-CREATE TABLE users
+create table users
 (
-    Id       SMALLSERIAL,
-    userName VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role     VARCHAR(255) NOT NULL,
-    CONSTRAINT UsersPK PRIMARY KEY (Id)
+    user_id       serial        not null
+        constraint users_pk
+            primary key,
+    email    varchar(1000) not null,
+    username varchar(100)  not null,
+    password varchar(100)  not null,
+    role     varchar(100)  not null
 );
 
 INSERT INTO test (firstname, lastname)
 VALUES ('Ola', 'Nordmann'),
        ('Kari', 'Nordmann');
+
+INSERT INTO users (email, username, password, role)
+VALUES ('test@test.no', 'test', 'test', 'user');

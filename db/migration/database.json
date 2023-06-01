@@ -2,7 +2,7 @@
   "defaultEnv": "pg",
   "pg": {
     "driver": "postgres",
-    "user": "postgres",
+    "user": {"ENV": "DB_USER"},
     "password": {"ENV": "DB_PASSWORD"},
     "database": {"ENV": "DB_NAME"},
     "host": {"ENV": "DB_HOST"},
