@@ -20,7 +20,7 @@ app.use(cookies(process.env.COOKIE_SECRET));
 routes(app);
 
 // Server Setup
-const port = process.env.PORT || 4040;
+const port = process.env.PORT || 4050;
 const server = http.createServer(app);
 server.listen(port);
 console.log("Server listing on port ", port);

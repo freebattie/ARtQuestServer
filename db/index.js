@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import pg from "pg";
+
 dotenv.config();
 
-const { Pool } = pg;
+const {Pool} = pg;
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -12,6 +13,7 @@ const pool = new Pool({
     port: process.env.DB_PORT || 5432,
 });
 console.log(pool)
+
 const query = (text, params) => pool.query(text, params);
 
-export { query };
+export {query};
