@@ -1,10 +1,10 @@
 
-export async function getAllQuests() {
+export async function getAllQuests(req, res) {
    console.log("getAllQuests()");
-   return [];
+   return res.sendStatus(200);
 }
 
-export async function updateQuest(item) {
+export async function updateQuest(req, res) {
    console.log("updateQuest()");
-   return {};
+   return res.sendStatus(200);
 }

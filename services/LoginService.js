@@ -1,5 +1,4 @@
 import * as db from "../db/index.js";
-import Hash from "../controller/Hash.js";
 
 export default class LoginService {
 
@@ -16,7 +15,10 @@ export default class LoginService {
       }
    };
 
-   /* Check if user */
+   /* Normal login check
+   * PARA1     string username
+   * PARA2     string password
+   * return    ???*/
    static loginUser = async (username, password) => {
       try {
          var result = await db.query(
