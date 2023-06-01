@@ -7,16 +7,16 @@ create table questrewards
     "picturedescription" varchar(1000) not null
 );
 
-create table usergallery
+create table public.usergallery
 (
-    user_id   integer
-        constraint "usergallery_users_user_id_fk"
+    user_email varchar(1000) not null
+        constraint usergallery_users_email_fk
             references public.users,
-    reward_id integer
-        constraint "usergallery_questrewards_reward_id_fk"
+    reward_id  integer       not null
+        constraint usergallery_questrewards_reward_id_fk
             references public.questrewards,
-    constraint "userGallery_pk"
-        primary key (user_id, reward_id)
+    constraint usergallery_pk
+        primary key (user_email, reward_id)
 );
 
 create table public.quests
@@ -41,12 +41,12 @@ create table public.questitems
 
 create table public.questprogression
 (
-    user_id integer
-        constraint questprogression_users_user_id_fk
+    user_email varchar(1000) not null
+        constraint questprogression_users_email_fk
             references public.users,
-    item_id integer
+    item_id integer     not null
         constraint questprogression_questitems_item_id_fk
             references public.questitems,
     constraint questprogression_pk
-        primary key (user_id, item_id)
+        primary key (user_email, item_id)
 );
