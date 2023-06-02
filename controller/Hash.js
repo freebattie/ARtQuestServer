@@ -1,18 +1,28 @@
 import * as crypto from 'crypto';
 
+/** #======================================================#
+ *  #    Program or program file : Hash.js
+ *  #    Description: Everything needed for hashing password
+ *  #    Author: Snorre
+ *  #    Date: 01.06.2023
+ *  #    Version 1.0
+ *  #======================================================#
+ * */
+
 export default class Hash {
 
-    /* Methode that HASH with SHA256 using pbkdf2
-    * PARA1         string to hash
-    * return        string that is hashed */
-    static pbkdf2 = async (string) => {
+    /**
+     * @description Methode that HASH with SHA256 using pbkdf2
+     * @param       salt string to salt string value
+     * @param       string string that is hashed
+     * @return      string that is hashed + salted */
+    static Pbkdf2 = async (salt, string) => {
         try {
             // URL explaining crypto.pbkdf2: https://www.geeksforgeeks.org/node-js-crypto-pbkdf2-method/
-            const salt = "salt"; // Implementation of this salt could have been better
-            const iterations = 10000;
-            const keylen = 64;
-            const digest = 'sha256';
-            return crypto.pbkdf2(string, salt, iterations, keylen, digest,
+            const ITERATION = 10000;
+            const KEYLEN = 64;
+            const DIGEST = 'sha256';
+            return crypto.pbkdf2(string, salt, ITERATION, KEYLEN, DIGEST,
                 (err, derivedKey) => {
                     if (err) throw err;
                 });

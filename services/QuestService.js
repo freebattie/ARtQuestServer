@@ -43,15 +43,15 @@ export async function updateQuestItem(user, item) {
         let queryResult = await db.query(`
                     SELECT q.item_id
                     FROM questprogression
-                    JOIN questitems q on q.item_id = questprogression.item_id
+                             JOIN questitems q on q.item_id = questprogression.item_id
                     WHERE user_email = $1
-                    AND quest_id = $2;`
+                      AND quest_id = $2;`
             , [user, item.quest_id]);
 
         console.log("Query item 3:");
         console.log(queryResult);
 
-       result.collected = queryResult.rows;
+        result.collected = queryResult.rows;
     }
 
     console.log("I Arrived");
