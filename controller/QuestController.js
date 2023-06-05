@@ -30,9 +30,9 @@ export async function updateQuest(req, res) {
 
     const {email} = req.signedCookies;
     const {quest, item} = req.body;
-
+  
     if (!email) {
-        // 401 Unauthorized
+        // 403 forbidden
         return res.sendStatus(403);
 
     } else if (quest === "" || item === "") {
