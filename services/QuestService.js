@@ -1,24 +1,37 @@
+/** #======================================================#
+ *  #    Program or program file : QuestController.js
+ *  #    Description: Connection point between Controller and DB
+ *  #    Author: Snorre & Micheal
+ *  #    Date: 02.06.2023
+ *  #    Version 1.0
+ *  #======================================================#
+ * */
+
 import * as db from "../db/index.js";
 
-export async function updateQuestItem(user, item) {
+/**
+ * @description takes in email and item from user to update db about progression
+ * @param       email - string
+ * @param       item - int id
+ * @return      json object named result, check API doc for more information*/
+export async function updateQuestItem(email, item) {
+    console.log("updateQuestItem()");
+
     let result = {
         quest: item.quest_id,
         size: "",
         collected: [],
-        reward: "We don't have any 😠"
+        reward: ""
     };
-    try {
-        console.log(user);
 
-        let queryResult = await db.query(`
+    try {
+        await db.query(`
                     INSERT INTO questprogression (user_email, item_id)
                     VALUES ($1, $2);`
-            , [user, item.item_id]);
+            , [email, item.item_id]);
 
-        console.log("Query item 1:");
-        console.log(queryResult);
     } catch (error) {
-        console.log("SQL error", error);
+        console.log("SQL query 1 error", error);
         return null;
     }
 
@@ -33,34 +46,30 @@ export async function updateQuestItem(user, item) {
             result.size = queryResult.rows[0];
         }
 
-        console.log("Query item 2:");
-        console.log(queryResult);
     } catch (error) {
-        console.log("SQL error", error);
+        console.log("SQL query 2 error", error);
     }
 
-    {
+    try {
         let queryResult = await db.query(`
                     SELECT q.item_id
                     FROM questprogression
-                    JOIN questitems q on q.item_id = questprogression.item_id
+                             JOIN questitems q on q.item_id = questprogression.item_id
                     WHERE user_email = $1
-                    AND quest_id = $2;`
-            , [user, item.quest_id]);
+                      AND quest_id = $2;`
+            , [email, item.quest_id]);
 
-        console.log("Query item 3:");
-        console.log(queryResult);
-
-       result.collected = queryResult.rows;
+        result.collected = queryResult.rows;
+    } catch (error) {
+        console.log("SQL query 3 error", error)
     }
 
-    console.log("I Arrived");
     return result;
 }
 
+// TODO: Not this sprint
 export async function getQuests(user) {
-    let result = [];
-    // TODO: Not this sprint
+    // let result = [];
     //
     // try {
     //    { // Get all quests
