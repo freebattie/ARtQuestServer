@@ -43,7 +43,8 @@ export async function updateQuestItem(email, item) {
             , [item.quest_id]);
 
         if (queryResult.rowCount > 0) {
-            result.size = queryResult.rows[0];
+            console.log(queryResult);
+            result.size = queryResult.rows[0]["itemcount"];
         }
 
     } catch (error) {
