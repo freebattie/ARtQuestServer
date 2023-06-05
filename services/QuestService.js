@@ -43,7 +43,8 @@ export async function updateQuestItem(email, item) {
             , [item.quest_id]);
 
         if (queryResult.rowCount > 0) {
-            result.size = queryResult.rows[0];
+            console.log(queryResult);
+            result.size = queryResult.rows[0]["itemcount"];
         }
 
     } catch (error) {
@@ -59,7 +60,8 @@ export async function updateQuestItem(email, item) {
                       AND quest_id = $2;`
             , [email, item.quest_id]);
 
-        result.collected = queryResult.rows;
+        // Map from item object -> int item_id
+        result.collected = queryResult.rows.map((item) => item.item_id);
     } catch (error) {
         console.log("SQL query 3 error", error)
     }

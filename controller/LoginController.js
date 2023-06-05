@@ -14,7 +14,8 @@ import * as Services from "../services/LoginService.js";
  * @description takes a cookie for approval and adds it to the requests (for the next task in line)
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body
- * @param       next - "function" call to the next step in Router.js */
+ * @param       next - "function" call to the next step in Router.js
+ * @return      async return with http response */
 export async function requestUser(req, res, next) {
     console.log("requestUser()");
 
@@ -30,7 +31,8 @@ export async function requestUser(req, res, next) {
 
 /** @description methode to check login for user, will sign a secure cookie
  * @param       req - The whole received HTTP message with headers and body
- * @param       res - The whole responding HTTP message with headers and body */
+ * @param       res - The whole responding HTTP message with headers and body
+ * @return      async return with http response */
 export async function login(req, res) {
     console.log("login()");
 

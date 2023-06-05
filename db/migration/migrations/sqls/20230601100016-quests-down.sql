@@ -1,12 +1,12 @@
-drop table questprogression;
+drop table if exists questprogression;
 
-drop table questitems;
+drop table if exists questitems;
 
-drop table quests;
+drop table if exists quests;
 
-drop table usergallery;
+drop table if exists usergallery;
 
-drop table questrewards;
+drop table if exists questrewards;
 
 
 
