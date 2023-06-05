@@ -10,14 +10,38 @@
 import * as Services from "../services/GalleryService.js";
 
 /**
- * @description
- * @param
- * @return */
-export async function getRewardInformation(req, res){
+ * @description return information about reward (painting)
+ * @param       req - The whole received HTTP message with headers and body
+ * @param       res - The whole responding HTTP message with headers and body
+ * @return      async return with http response */
+export async function getRewardInformation(req, res) {
     console.log("getPaintingInformation()");
 
     const {email} = req.signedCookies;
     const {rewardId} = req.params;
 
-    return res.sendStatus(501);
+    if (!email) {
+        // 401 Unauthorized
+        return res.sendStatus(403);
+
+    } else if (rewardId === "") {
+        // Bad request
+        return res.sendStatus(400);
+
+    } else {
+        let rewardInformation = await Services.getRewardInformation(email, rewardId);
+
+        // 403 forbidden
+        if (rewardInformation === 403) {
+            res.sendStatus(403)
+
+        } else if (rewardInformation === 500) {
+            // 500 internal server error
+            res.sendStatus(500);
+
+        } else {
+            res.send(rewardInformation);
+        }
+
+    }
 }

@@ -10,7 +10,7 @@
 const LOGINPATH = "/api/login";
 const REGISTERPATH = "/api/register";
 const QUESTAPIPATH = "/api/quest";
-const GALLERYPATH = "api/gallery/:rewardId";
+const GALLERYPATH = "/api/gallery/:rewardId";
 
 import * as LoginController from "./controller/LoginController.js";
 import * as RegisterController from "./controller/RegisterController.js";

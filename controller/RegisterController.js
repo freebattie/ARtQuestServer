@@ -12,7 +12,8 @@ import * as Services from "../services/RegisterService.js";
 /**
  * @description Takes inn email and password from user and makes an account
  * @param       req - The whole received HTTP message with headers and body
- * @param       res - The whole responding HTTP message with headers and body */
+ * @param       res - The whole responding HTTP message with headers and body
+ * @return      async return with http response */
 export async function register(req, res) {
     console.log("register()");
 
