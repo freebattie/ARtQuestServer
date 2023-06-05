@@ -22,7 +22,7 @@ export async function requestUser(req, res, next) {
     const {rows} = await Services.requestUser(email);
 
     if (rows.length > 0) {
-        req.user = {userName: rows[0].userName, role: rows[0].role};
+        req.user = {email: rows[0].email, role: rows[0].role};
     }
 
     next();
@@ -34,15 +34,15 @@ export async function requestUser(req, res, next) {
 export async function login(req, res) {
     console.log("login()");
 
-    const {userName, password} = req.body;
+    const {email, password} = req.body;
 
     // 400 bad request
-    if (userName === "" || password === "") {
+    if (email === "" || password === "") {
         return res.sendStatus(400);
     }
 
     // Check user to database
-    const {rows} = await Services.loginUser(userName, password);
+    const {rows} = await Services.loginUser(email, password);
 
     // 400 Bad Request
     if (rows.length < 1) {
@@ -50,7 +50,7 @@ export async function login(req, res) {
 
         //     User successful
     } else {
-        res.cookie("userName", rows[0].email, {signed: true});
+        res.cookie("email", rows[0].email, {signed: true});
         res.cookie("role", rows[0].role, {signed: true});
         res.sendStatus(200);
     }
