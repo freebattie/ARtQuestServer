@@ -7,30 +7,33 @@
  *  #======================================================#
  * */
 
-import LoginService from "../services/LoginService.js";
+
+import * as Services from "../services/LoginService.js";
 
 /**
  * @description takes a cookie for approval and adds it to the requests (for the next task in line)
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body
  * @param       next - "function" call to the next step in Router.js */
-export const requestUser = async (req, res, next) => {
+export async function requestUser(req, res, next) {
     console.log("requestUser()");
+
     const {email} = req.signedCookies;
-    const {rows} = await LoginService.requestUser(email);
+    const {rows} = await Services.requestUser(email);
 
     if (rows.length > 0) {
         req.user = {userName: rows[0].userName, role: rows[0].role};
     }
 
     next();
-};
+}
 
 /** @description methode to check login for user, will sign a secure cookie
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body */
-export const login = async (req, res) => {
+export async function login(req, res) {
     console.log("login()");
+
     const {userName, password} = req.body;
 
     // 400 bad request
@@ -39,7 +42,7 @@ export const login = async (req, res) => {
     }
 
     // Check user to database
-    const {rows} = await LoginService.loginUser(userName, password);
+    const {rows} = await Services.loginUser(userName, password);
 
     // 400 Bad Request
     if (rows.length < 1) {
@@ -51,4 +54,4 @@ export const login = async (req, res) => {
         res.cookie("role", rows[0].role, {signed: true});
         res.sendStatus(200);
     }
-};
+}

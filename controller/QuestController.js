@@ -7,7 +7,7 @@
  *  #======================================================#
  * */
 
-import * as QuestService from "../services/QuestService.js";
+import * as Services from "../services/QuestService.js";
 
 /**
  * @description unknown
@@ -25,6 +25,7 @@ export async function getAllQuests(req, res) {
  * @param       res - The whole responding HTTP message with headers and body */
 export async function updateQuest(req, res) {
     console.log("updateQuest()");
+
     const {email} = req.signedCookies;
     const {quest, item} = req.body;
 
@@ -38,7 +39,7 @@ export async function updateQuest(req, res) {
 
     } else {
         try {
-            let progress = await QuestService.updateQuestItem(email, {quest_id: quest, item_id: item});
+            let progress = await Services.updateQuestItem(email, {quest_id: quest, item_id: item});
 
             if (progress !== null) {
                 return res.send(progress);
