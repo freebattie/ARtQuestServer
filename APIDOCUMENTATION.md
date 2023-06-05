@@ -7,7 +7,7 @@ Users can log in by providing their username and password.
 The server responds with:
 
 - `200 ok` with a session cookie, If the user exists and valid.
-- `400 bad request`, If the data was incorect or the data was malformed.
+- `400 bad request`, If the data was incorrect or the data was malformed.
 
 ## POST /api/register
 
@@ -15,7 +15,7 @@ Registe a new user to the service.
 
 The server responds with:
 
-- `200 ok` If the registration is succefull
+- `200 ok` If the registration is succesful
 - `409 forbidden` If there already is a user with the supplied email
 
 ## GET /api/quest
@@ -24,7 +24,7 @@ Update quest progression with a scanned item
 
 The server responds with:
 
-- `200 ok` If the user has not sendt the item before with a the following body:
+- `200 ok` If the user has not sent the item before with the following body:
     
 
 ``` json
@@ -37,7 +37,7 @@ The server responds with:
 
 ```
 
-- `400 bad request` If the data sendt is malformed
+- `400 bad request` If the data sent is malformed
 - `401 unauthorized` If the request is missing a session cookie
 - `409 conflict` If the user has already scanned the quest item
 - `403 forbidden`If the session cookie is invalid
@@ -68,3 +68,22 @@ The server responds with:
 - `401 unauthorized` If the request was sent without a session cookie
 - `403 forbidden`If the request was sent with an invalid session cookie
 
+## GET /api/info/:reward_id
+
+Get all data related to the reward_id
+
+The server responds with:
+
+- `200 ok` if the user has collected the reward, the response body contains the following format:
+
+```json
+   {
+      "title": "The Squeek",
+      "description": "A bridge with a squeeking person",
+      "filename": "squeekerfile"
+   }
+```
+
+-- `401 not authorized` If the session cookie is missing
+
+-- `403 forbidden` If the user has not received this reward
