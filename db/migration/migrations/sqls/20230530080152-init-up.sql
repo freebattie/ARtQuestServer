@@ -11,18 +11,17 @@ CREATE TABLE test
 
 create table users
 (
-    user_id       serial        not null
+    id       serial not null,
+    email    varchar(1000)
         constraint users_pk
             primary key,
-    email    varchar(1000) not null,
-    username varchar(100)  not null,
-    password varchar(100)  not null,
-    role     varchar(100)  not null
+    password varchar(100),
+    role     varchar(100)
 );
 
 INSERT INTO test (firstname, lastname)
 VALUES ('Ola', 'Nordmann'),
        ('Kari', 'Nordmann');
 
-INSERT INTO users (email, username, password, role)
-VALUES ('test@test.no', 'test', 'test', 'user');
+INSERT INTO users (email, password, role)
+VALUES ('test@test.no', 'test', 'user');

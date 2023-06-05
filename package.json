@@ -2,14 +2,14 @@
   "name": "artquestserver",
   "version": "1.0.0",
   "description": "server backend for ARtQuest app",
-  "main": "server.js",
+  "main": "Server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "dev": "nodemon Server.js",
     "db-install": "cd db/migration && npm install",
-    "db-migrate": "cd db/migration && npx db-migrate up;",
-    "db-reset": "cd db/migration && npx db-migrate reset;"
+    "db-migrate": "cd db/migration && npx db-migrate reset && npx db-migrate up",
+    "db-reset": "cd db/migration && npx db-migrate reset"
   },
   "author": "",
   "license": "ISC",
