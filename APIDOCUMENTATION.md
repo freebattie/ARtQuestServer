@@ -1,4 +1,6 @@
-# Api Documentation
+# API Documentation
+
+All routes may return `500 internal server errror`
 
 ## POST /api/login
 
@@ -11,11 +13,11 @@ The server responds with:
 
 ## POST /api/register
 
-Registe a new user to the service.
+Register a new user to the service.
 
 The server responds with:
 
-- `200 ok` If the registration is succesful
+- `200 ok` If the registration is successful
 - `409 forbidden` If there already is a user with the supplied email
 
 ## GET /api/quest
