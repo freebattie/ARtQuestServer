@@ -12,7 +12,6 @@ questitems -- questprogression
 class users {
     int - user_id
     string - email
-    string - username
     string - password
     string - role
     PK user_id()

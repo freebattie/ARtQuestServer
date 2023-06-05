@@ -10,13 +10,13 @@
 import * as Services from "../services/QuestService.js";
 
 /**
- * @description unknown
+ * @description unk nown
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body */
 export async function getAllQuests(req, res) {
     console.log("getAllQuests()");
     // TODO 503 is just tmp
-    return res.sendStatus(503);
+    return res.sendStatus(501);
 }
 
 /**

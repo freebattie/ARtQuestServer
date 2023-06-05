@@ -9,11 +9,13 @@
 
 const LOGINPATH = "/api/login";
 const REGISTERPATH = "/api/register";
-const QUESTAPI = "/api/quest";
+const QUESTAPIPATH = "/api/quest";
+const GALLERYPATH = "api/gallery/:rewardId";
 
 import * as LoginController from "./controller/LoginController.js";
 import * as RegisterController from "./controller/RegisterController.js";
 import * as QuestController from "./controller/QuestController.js";
+import * as GalleryController from "./controller/GalleryController.js";
 
 const routes = (app) => {
     // Login
@@ -23,7 +25,7 @@ const routes = (app) => {
     app.post(REGISTERPATH, RegisterController.register);
 
     // Quests
-    app.route(QUESTAPI)
+    app.route(QUESTAPIPATH)
         .get(
             LoginController.requestUser,
             QuestController.getAllQuests
@@ -33,6 +35,14 @@ const routes = (app) => {
             QuestController.updateQuest
         )
     ;
+
+    // Gallery
+    app.get(
+        GALLERYPATH,
+        LoginController.requestUser,
+        GalleryController.getRewardInformation
+    );
+
 
 };
 

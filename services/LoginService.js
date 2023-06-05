@@ -10,15 +10,15 @@
 import * as db from "../db/index.js";
 
 /**
- * @description Gets all userinfo by searching with username
- * @param     username - string
+ * @description Gets all userinfo by searching with email
+ * @param     email - string
  * @return    db.row with user info*/
-export async function requestUser(username) {
+export async function requestUser(email) {
     console.log("requestUser()");
 
     try {
         return await db.query("Select * from users where email = $1", [
-            username,
+            email,
         ]);
     } catch (error) {
         console.log("requestUser error: ", error);
@@ -27,16 +27,16 @@ export async function requestUser(username) {
 
 /**
  * @description Normal login check
- * @param       username - string
+ * @param       email - string
  * @param       password - string
  * @return      db.row with one or zero user */
-export async function loginUser(username, password) {
+export async function loginUser(email, password) {
     console.log("loginUser()");
 
     try {
         return await db.query(
             "Select * from users where email = $1 AND password = $2",
-            [username, password]
+            [email, password]
         );
 
     } catch (error) {

@@ -11,7 +11,6 @@ CREATE TABLE test
 
 create table users
 (
-    id       serial not null,
     email    varchar(1000)
         constraint users_pk
             primary key,
