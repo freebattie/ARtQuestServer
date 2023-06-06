@@ -32,7 +32,8 @@ export async function getAllQuests(req, res) {
         let progress = await Services.getAllQuests(email);
 
         switch (progress) {
-            case 500: return res.sendStatus(500); // 500 internal server error
+            case 500:
+                return res.sendStatus(500); // 500 internal server error
         }
 
         return res.send(progress);
@@ -62,7 +63,8 @@ export async function updateQuest(req, res) {
         let progress = await Services.updateQuestItem(email, item, quest);
 
         switch (progress) {
-            case 500: return res.sendStatus(500); // 500 internal server error
+            case 500:
+                return res.sendStatus(500); // 500 internal server error
         }
 
         return res.send(progress);

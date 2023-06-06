@@ -23,7 +23,11 @@ export async function updateQuestItem(email, itemId, questId) {
         quest: questId,
         size: "",
         collected: [],
-        reward: ""
+        reward: {
+            filename: "",
+            picturedescription: "",
+            picturetitle: ""
+        }
     };
 
     // Check if values exist beforehand
@@ -90,6 +94,18 @@ export async function updateQuestItem(email, itemId, questId) {
 
     } catch (error) {
         console.log("SQL 4 error", error)
+        return 500;
+    }
+
+    // give reward to player
+    try {
+        let queryResult = await db.query(`
+            
+        `)
+
+
+    } catch (error) {
+        console.log("SQL 5 error: ", error);
         return 500;
     }
 
