@@ -96,57 +96,71 @@ export async function updateQuestItem(email, itemId, questId) {
     return result;
 }
 
-// TODO: Not this sprint
-export async function getQuests(user) {
-    // let result = [];
-    //
-    // try {
-    //    { // Get all quests
-    //       let { queryResult } = await db.query("QUERY", user);
-    //
-    //       for (row in queryResult.rows) {
-    //          result.push({
-    //             quest: row[0], // Actual Quest
-    //             questCount: row[1], // Total items for quest
-    //             collected: []
-    //          })
-    //       }
-    //    }
-    //
-    //    { // Fill in found quest items for each quests
-    //       let { queryResult } = await db.query("QUERY", user);
-    //
-    //       for (row in queryResult.rows) {
-    //          result.find((q) => q.quest == row[0]).push(row[1]);
-    //       }
-    //    }
-    //
-    //    { // Get reward path for users rewards
-    //       let { queryResult } = await db.query("QUERY", user)
-    //    }
-    // }
-    // catch (sql_err) {
-    //    console.err(sql_err);
-    //    result = [];
-    // }
-    // finally {
-    //    return result;
-    // }
-    //
-    // -------------------- SQL QUERY Sketch --------------------------
-    // SELECT quest_id, itemcount
-    // FROM quests;
-    //
-    // SELECT questitems.item_id
-    // FROM questitems
-    // inner join questprogression q on questitems.item_id = q.item_id
-    // WHERE user_email = 'test@test.no'
-    // ORDER BY quest_id ASC;
-    //
-    // SELECT picturename
-    // FROM usergallery
-    // inner join questrewards q on q.reward_id = usergallery.reward_id
-    // WHERE user_email = 'test@test.no';
+
+/**
+ * @description return progress of all quests to client
+ * @param       email - string
+ * @return      array of quest object with progression */
+export async function getAllQuests(email) {
+    let results = [];
+
+    // Get all quests
+    try {
+        let queryResult = await db.query(`
+            select quest_id, galleryname, itemcount
+            from quests;
+        `);
+
+        for (let row of queryResult.rows) {
+            results.push({
+                quest: row.quest_id, // Actual Quest
+                galleryname: row.galleryname,
+                size: row.itemcount, // Total items for quest
+                collected: [],
+            })
+        }
+
+    } catch (error) {
+        console.log("SQL 1 error: ", error);
+        return 500;
+    }
+
+    // Fill in found quest items for each quests
+    try {
+        let queryResult = await db.query(`
+            SELECT q2.quest_id, q.item_id
+            FROM questprogression as q
+                     inner join questitems q2 on q2.item_id = q.item_id
+            WHERE user_email = $1
+            order by quest_id;
+        `, [email]);
+
+        let currentQuest = queryResult.rows[0].quest_id;
+        let tmpArray = [];
+        let resultsIndex = 0;
+
+        for (let row of queryResult.rows) {
+            if (currentQuest !== row.quest_id) {
+                currentQuest = row.quest_id;
+                results[resultsIndex].collected = tmpArray;
+                resultsIndex++;
+                tmpArray = [];
+            }
+
+            tmpArray.push(row.item_id);
+            console.log(results);
+        }
+        results[resultsIndex].collected = tmpArray;
+
+
+    } catch (error) {
+        console.log("SQL 2 error: ", error);
+        return 500;
+    }
+
+    return results;
 }
+
+
 
 
