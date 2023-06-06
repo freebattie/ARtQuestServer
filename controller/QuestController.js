@@ -30,7 +30,7 @@ export async function updateQuest(req, res) {
 
     const {email} = req.signedCookies;
     const {quest, item} = req.body;
-  
+
     if (!email) {
         // 403 forbidden
         return res.sendStatus(403);
@@ -40,20 +40,14 @@ export async function updateQuest(req, res) {
         return res.sendStatus(400);
 
     } else {
-        try {
-            let progress = await Services.updateQuestItem(email, {quest_id: quest, item_id: item});
+        let progress = await Services.updateQuestItem(email, item, quest);
 
-            if (progress !== null) {
-                return res.send(progress);
-            } else {
-                // 409 Conflict
-                return res.sendStatus(409);
-            }
-
-        } catch (error) {
-            // 500 Internal server error
-            return res.sendStatus(500);
+        switch (progress) {
+            // case 409: return res.sendStatus(409); // 409 conflict
+            case 500: return res.sendStatus(500); // 500 internal server error
         }
+
+        return res.send(progress);
     }
 
 }

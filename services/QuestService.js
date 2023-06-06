@@ -10,60 +10,87 @@
 import * as db from "../db/index.js";
 
 /**
- * @description takes in email and item from user to update db about progression
+ * @description takes in email and itemId from user to update db about progression
  * @param       email - string
- * @param       item - int id
+ * @param       itemId - int id
+ * @param       questId - int id
  * @return      json object named result, check API doc for more information*/
-export async function updateQuestItem(email, item) {
+export async function updateQuestItem(email, itemId, questId) {
     console.log("updateQuestItem()");
 
+    let isRegistered = false;
     let result = {
-        quest: item.quest_id,
+        quest: questId,
         size: "",
         collected: [],
         reward: ""
     };
 
-    try {
-        await db.query(`
-                    INSERT INTO questprogression (user_email, item_id)
-                    VALUES ($1, $2);`
-            , [email, item.item_id]);
-
-    } catch (error) {
-        console.log("SQL query 1 error", error);
-        return null;
-    }
-
+    // Check if values exist beforehand
     try {
         let queryResult = await db.query(`
-                    SELECT itemcount
-                    from quests
-                    WHERE quest_id = $1;`
-            , [item.quest_id]);
+            select *
+            from questprogression
+            where user_email = $1
+              and item_id = $2;
+        `, [email, itemId]);
 
         if (queryResult.rowCount > 0) {
-            console.log(queryResult);
+            isRegistered = true;
+        }
+
+    } catch (error) {
+        console.log("SQL 1 error: ", error);
+        return 500;
+    }
+
+    // Add item to collection
+    if (!isRegistered) {
+        try {
+            await db.query(`
+                insert into questprogression (user_email, item_id)
+                values ($1, $2);
+            `, [email, itemId]);
+
+        } catch (error) {
+            console.log("SQL 2 error: ", error);
+            return 500;
+        }
+    }
+
+    // get size from collection that itemId is connected to
+    try {
+        let queryResult = await db.query(`
+            SELECT itemcount
+            from quests
+            WHERE quest_id = $1;
+        `, [questId]);
+
+        if (queryResult.rowCount > 0) {
             result.size = queryResult.rows[0]["itemcount"];
         }
 
     } catch (error) {
-        console.log("SQL query 2 error", error);
+        console.log("SQL 3 error", error);
+        return 500;
     }
 
+    // get array of itemId from quest that user have collected
     try {
         let queryResult = await db.query(`
-                    SELECT q.item_id
-                    FROM questprogression
-                             JOIN questitems q on q.item_id = questprogression.item_id
-                    WHERE user_email = $1
-                      AND quest_id = $2;`
-            , [email, item.quest_id]);
+            SELECT q.item_id
+            FROM questprogression
+                     JOIN questitems q on q.item_id = questprogression.item_id
+            WHERE user_email = $1
+              AND quest_id = $2;
+        `, [email, questId]);
 
-        // Map from item object -> int item_id
+        // Map from itemId object -> int item_id
         result.collected = queryResult.rows.map((item) => item.item_id);
+
     } catch (error) {
-        console.log("SQL query 3 error", error)
+        console.log("SQL 4 error", error)
+        return 500;
     }
 
     return result;
