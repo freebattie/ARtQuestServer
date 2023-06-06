@@ -31,7 +31,8 @@ export async function updateQuestItem(email, itemId, questId) {
     };
 
     // Check if values exist beforehand
-    try {
+    console.log("SQL 1");
+    {
         let queryResult = await db.query(`
             select *
             from questprogression
@@ -42,28 +43,22 @@ export async function updateQuestItem(email, itemId, questId) {
         if (queryResult.rowCount > 0) {
             isRegistered = true;
         }
-
-    } catch (error) {
-        console.log("SQL 1 error: ", error);
-        return 500;
     }
 
     // Add item to collection
     if (!isRegistered) {
-        try {
-            await db.query(`
-                insert into questprogression (user_email, item_id)
-                values ($1, $2);
-            `, [email, itemId]);
+        console.log("SQL 2");
 
-        } catch (error) {
-            console.log("SQL 2 error: ", error);
-            return 500;
-        }
+        await db.query(`
+            insert into questprogression (user_email, item_id)
+            values ($1, $2);
+        `, [email, itemId]);
     }
 
+
     // get size from collection that itemId is connected to
-    try {
+    console.log("SQL 3");
+    {
         let queryResult = await db.query(`
             SELECT itemcount
             from quests
@@ -73,14 +68,11 @@ export async function updateQuestItem(email, itemId, questId) {
         if (queryResult.rowCount > 0) {
             result.size = queryResult.rows[0]["itemcount"];
         }
-
-    } catch (error) {
-        console.log("SQL 3 error", error);
-        return 500;
     }
 
-    // get array of itemId from quest that user have collected
-    try {
+// get array of itemId from quest that user have collected
+    console.log("SQL 4")
+    {
         let queryResult = await db.query(`
             SELECT q.item_id
             FROM questprogression
@@ -91,23 +83,16 @@ export async function updateQuestItem(email, itemId, questId) {
 
         // Map from itemId object -> int item_id
         result.collected = queryResult.rows.map((item) => item.item_id);
-
-    } catch (error) {
-        console.log("SQL 4 error", error)
-        return 500;
     }
 
-    // give reward to player
-    try {
+// give reward to player
+    console.log("SQL 5");
+    {
         let queryResult = await db.query(`
             
-        `)
-
-
-    } catch (error) {
-        console.log("SQL 5 error: ", error);
-        return 500;
+        `);
     }
+
 
     return result;
 }

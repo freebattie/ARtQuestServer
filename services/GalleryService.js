@@ -13,14 +13,14 @@ export async function getRewardInformation(email, rewardId) {
     console.log("getRewardInformation");
 
     let result = {
-        picturename: "",
+        filename: "",
         picturetitle: "",
         picturedescription: ""
     }
 
     try {
         let queryResult = await db.query(`
-            select picturename, picturetitle, picturedescription
+            select filename, picturetitle, picturedescription
             from questrewards
                      join usergallery u on questrewards.reward_id = u.reward_id
             where user_email = $1
@@ -32,7 +32,7 @@ export async function getRewardInformation(email, rewardId) {
             return 403;
         }
 
-        result.picturename = queryResult.rows[0].picturename;
+        result.filename = queryResult.rows[0].filename;
         result.picturetitle = queryResult.rows[0].picturetitle;
         result.picturedescription = queryResult.rows[0].picturedescription;
         return result;
