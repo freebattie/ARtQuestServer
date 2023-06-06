@@ -6,6 +6,14 @@ All routes may return `500 internal server errror`
 
 Users can log in by providing their username and password.
 
+Request requires a body with:
+```json
+{
+    "email": "test@test.no",
+    "password": "verysecurepassword"
+}
+```
+
 The server responds with:
 
 - `200 ok` with a session cookie, If the user exists and valid.
@@ -15,14 +23,31 @@ The server responds with:
 
 Register a new user to the service.
 
+Request requires a body with:
+```json
+{
+    "email": "test@test.no",
+    "password": "verysecurepassword"
+}
+```
+
 The server responds with:
 
 - `200 ok` If the registration is successful
 - `409 forbidden` If there already is a user with the supplied email
 
-## GET /api/quest
+## POST /api/quest
 
 Update quest progression with a scanned item
+
+The request requires that a valid session cookie obtainable by `/api/login`,
+and a body with:
+```json
+{
+    "quest": "1",
+    "item": "2"
+}
+```
 
 The server responds with:
 
@@ -34,7 +59,6 @@ The server responds with:
     "quest": 1, // quest id
     "size": 10, // total items to collect
     "collected": [1, 2], // ids of the collected items
-    "reward": "rewardimage" // filename for the quest reward
 }
 
 ```
@@ -45,11 +69,9 @@ The server responds with:
 - `403 forbidden`If the session cookie is invalid
 
 
-## POST /api/quest
+## GET /api/quest
 
 Get existing quests and how far the user has progressed on each quest.
-
-The request requires that a valid session cookie obtainable by `/api/login`.
 
 The server responds with:
 
@@ -58,19 +80,22 @@ The server responds with:
 
 ``` json
 {
-    "id": 0,
-    "name": "A Gallery",
-    "description": "Here be The Scream",
-    "totalItemCount": 10,
-    "collectedItemCount": [3, 1]
+   "quest": 0,
+   "size": 10,
+   "collected": [3, 1],
+   "reward": {
+      "filename": "image.png"
+      "name": "Scream",
+      "description": "Here be The Scream",
+   }
 }
 
 ```
 
 - `401 unauthorized` If the request was sent without a session cookie
-- `403 forbidden`If the request was sent with an invalid session cookie
+- `403 forbidden` If the request was sent with an invalid session cookie
 
-## GET /api/info/:reward_id
+## GET /api/gallery/:reward_id
 
 Get all data related to the reward_id
 
@@ -89,3 +114,27 @@ The server responds with:
 -- `401 not authorized` If the session cookie is missing
 
 -- `403 forbidden` If the user has not received this reward
+
+## GET /api/gallery/
+
+Get an array for all the rewards the user has access to.
+
+The server responds with:
+
+- `200 ok` with a array of rewards with the format:
+```json
+   [
+      {
+         "title": "The Squeek",
+         "description": "A bridge with a squeeking person",
+         "filename": "squeekerfile"
+      },
+      {
+         "title": "The Squeek2",
+         "description": "A bridge with a second squeeking person",
+         "filename": "squeekerfile2"
+      }
+   ]
+```
+
+- `401 unauthorized` if the request was sendt without a session cookie
