@@ -25,19 +25,23 @@ export async function register(req, res) {
         return res.sendStatus(403);
     }
 
+    try {
+    
     let exists = await Services.userExists(email);
-
     console.log("User does " + (exists ? "" : "not ") + "exist");
-
     if (exists) {
         res.status(409);
         res.send("User already exists");
     }
+
         // Create user
     // Role is hardcoded because the registration form is only for normal users
     else if ((await Services.addUser(email, password, "casual")) === true) {
         res.sendStatus(200);
-    } else {
-        res.sendStatus(500);
+    }
+        
+    } catch (error) {
+        console.log("SQL error: ", error);
+        return res.sendStatus(500);
     }
 }

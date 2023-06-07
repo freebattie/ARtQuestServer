@@ -10,7 +10,8 @@
 const LOGINPATH = "/api/login";
 const REGISTERPATH = "/api/register";
 const QUESTAPIPATH = "/api/quest";
-const GALLERYPATH = "/api/gallery/:rewardId";
+const GALLERYSINGLEPATH = "/api/gallery/:rewardId";
+const GALLERYPATH = "/api/gallery/";
 
 import * as LoginController from "./controller/LoginController.js";
 import * as RegisterController from "./controller/RegisterController.js";
@@ -36,13 +37,19 @@ const routes = (app) => {
         )
     ;
 
-    // Gallery
+    // Gallery get information for single painting for single user
+    app.get(
+        GALLERYSINGLEPATH,
+        LoginController.requestUser,
+        GalleryController.getSingleRewardInformation
+    );
+
+    // Gallery get information for all the paintings for single user
     app.get(
         GALLERYPATH,
         LoginController.requestUser,
-        GalleryController.getRewardInformation
+        GalleryController.getAllRewardInformation
     );
-
 
 };
 

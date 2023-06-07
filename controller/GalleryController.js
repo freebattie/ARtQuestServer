@@ -14,14 +14,14 @@ import * as Services from "../services/GalleryService.js";
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body
  * @return      async return with http response */
-export async function getRewardInformation(req, res) {
+export async function getSingleRewardInformation(req, res) {
     console.log("getPaintingInformation()");
 
     const {email} = req.signedCookies;
     const {rewardId} = req.params;
 
     if (!email) {
-        // 401 Unauthorized
+        // 403 forbidden
         return res.sendStatus(403);
 
     } else if (rewardId === "") {
@@ -29,19 +29,41 @@ export async function getRewardInformation(req, res) {
         return res.sendStatus(400);
 
     } else {
-        let rewardInformation = await Services.getRewardInformation(email, rewardId);
+        try {
+            let rewardInformation = await Services.getRewardInformation(email, rewardId);
 
-        // 403 forbidden
-        if (rewardInformation === 403) {
-            res.sendStatus(403)
+            // 403 forbidden
+            if (rewardInformation === 403) {
+                return res.sendStatus(403)
 
-        } else if (rewardInformation === 500) {
-            // 500 internal server error
-            res.sendStatus(500);
+            } else {
+                return res.send(rewardInformation);
+            }
 
-        } else {
-            res.send(rewardInformation);
+        } catch (error) {
+            console.log("SQL error: ", error);
+            return res.sendStatus(500);
         }
+    }
+}
 
+export async function getAllRewardInformation(req, res) {
+    console.log("getAllRewardInformation()");
+
+    const {email} = req.signedCookies;
+
+    if (!email) {
+        // 403 forbidden
+        return res.sendStatus(403);
+
+    } else {
+        try {
+            let rewardInformation = await Services.getAllRewardInformation(email);
+            return res.send(rewardInformation);
+
+        } catch (error) {
+            console.log("SQL error", error);
+            return res.sendStatus(500);
+        }
     }
 }

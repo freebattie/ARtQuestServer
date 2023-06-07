@@ -33,14 +33,11 @@ export async function requestUser(email) {
 export async function loginUser(email, password) {
     console.log("loginUser()");
 
-    try {
+    {
         return await db.query(
             "Select * from users where email = $1 AND password = $2",
             [email, password]
         );
-
-    } catch (error) {
-        console.log("requestUser error: ", error);
     }
 }
 

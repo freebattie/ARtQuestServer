@@ -10,18 +10,17 @@ questitems -- questprogression
 
 
 class users {
-    int - user_id
     string - email
     string - password
     string - role
-    PK user_id()
+    PK email()
 }
 
 class usergallery {
-    int - user_id
+    string - user_email
     int - reward_id
 
-    PK user_id()
+    PK user_email()
     PK FK reward_id()
 }
 
@@ -37,6 +36,7 @@ class questrewards {
     int - reward_id
     string - picturename
     string - picturedescription
+    string - picturetitle
     PK reward_id()
 }
 

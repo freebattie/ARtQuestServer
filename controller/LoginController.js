@@ -43,17 +43,23 @@ export async function login(req, res) {
         return res.sendStatus(400);
     }
 
-    // Check user to database
-    const {rows} = await Services.loginUser(email, password);
+    try {
+        // Check user to database
+        const {rows} = await Services.loginUser(email, password);
 
-    // 400 Bad Request
-    if (rows.length < 1) {
-        res.sendStatus(400);
+        // 400 Bad Request
+        if (rows.length < 1) {
+            return res.sendStatus(400);
 
-        //     User successful
-    } else {
-        res.cookie("email", rows[0].email, {signed: true});
-        res.cookie("role", rows[0].role, {signed: true});
-        res.sendStatus(200);
+            //     User successful
+        } else {
+            res.cookie("email", rows[0].email, {signed: true});
+            res.cookie("role", rows[0].role, {signed: true});
+            return res.sendStatus(200);
+        }
+
+    } catch (error) {
+        console.log("SQL error: ", error);
+        return res.sendStatus(500);
     }
 }

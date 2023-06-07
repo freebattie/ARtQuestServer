@@ -16,8 +16,28 @@ import * as Services from "../services/QuestService.js";
  * @return      async return with http response */
 export async function getAllQuests(req, res) {
     console.log("getAllQuests()");
-    // TODO 503 is just tmp
-    return res.sendStatus(501);
+
+    const {email} = req.signedCookies;
+    const {quest} = req.body;
+
+    if (!email) {
+        // 403 forbidden
+        return res.sendStatus(403);
+
+    } else if (quest === "") {
+        // Bad request
+        return res.sendStatus(400);
+
+    } else {
+        try {
+            let progress = await Services.getAllQuests(email);
+            return res.send(progress);
+
+        } catch (error) {
+            console.log("SQL error: ", error);
+            return (500);
+        }
+    }
 }
 
 /**
@@ -30,7 +50,7 @@ export async function updateQuest(req, res) {
 
     const {email} = req.signedCookies;
     const {quest, item} = req.body;
-  
+
     if (!email) {
         // 403 forbidden
         return res.sendStatus(403);
@@ -41,19 +61,12 @@ export async function updateQuest(req, res) {
 
     } else {
         try {
-            let progress = await Services.updateQuestItem(email, {quest_id: quest, item_id: item});
-
-            if (progress !== null) {
-                return res.send(progress);
-            } else {
-                // 409 Conflict
-                return res.sendStatus(409);
-            }
+            let progress = await Services.updateQuestItem(email, item, quest);
+            return res.send(progress);
 
         } catch (error) {
-            // 500 Internal server error
+            console.log("SQL error: ", error);
             return res.sendStatus(500);
         }
     }
-
 }
