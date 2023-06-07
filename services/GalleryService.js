@@ -9,6 +9,11 @@
 
 import * as db from "../db/index.js";
 
+/**
+ * @description get reward information based on user email and reward ID
+ * @param       email - string
+ * @param       rewardId - int
+ * @return      json object with filname, picturetitle and picutre description*/
 export async function getRewardInformation(email, rewardId) {
     console.log("getRewardInformation");
 
@@ -39,13 +44,16 @@ export async function getRewardInformation(email, rewardId) {
     }
 }
 
+
+/**
+ * @description get all information about all the reward user have
+ * @param       email - string
+ * @return      json object what has a array of object describing the rewards*/
 export async function  getAllRewardInformation(email){
     console.log("getAllRewardInformation()");
 
     let result = [];
-
-    console.log(email);
-
+    
     {
         let queryResult = await db.query(`
             select filename, picturetitle, picturedescription
@@ -53,9 +61,7 @@ export async function  getAllRewardInformation(email){
                      inner join questrewards q on q.reward_id = g.reward_id
             where user_email = $1;
         `, [email]);
-
-        console.log(queryResult);
-
+        
         for (let row of queryResult.rows) {
             let picture = {
                 filename: row.filename,
@@ -63,11 +69,9 @@ export async function  getAllRewardInformation(email){
                 picturedescription: row.picturedescription
             };
 
-            console.log("push");
             result.push(picture);
         }
 
-        console.log("return");
         return result;
     }
 

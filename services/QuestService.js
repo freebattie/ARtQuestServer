@@ -18,7 +18,6 @@ import * as db from "../db/index.js";
 export async function updateQuestItem(email, itemId, questId) {
     console.log("updateQuestItem()");
 
-    let isRegistered = false;
     let result = {
         quest: questId,
         size: "",
@@ -30,34 +29,21 @@ export async function updateQuestItem(email, itemId, questId) {
         }
     };
 
-    // Check if values exist beforehand
+    // Check if values exist, if yes add it
     console.log("SQL 1");
     {
-        let queryResult = await db.query(`
-            select *
-            from questprogression
-            where user_email = $1
-              and item_id = $2;
-        `, [email, itemId]);
-
-        if (queryResult.rowCount > 0) {
-            isRegistered = true;
-        }
-    }
-
-    // Add item to collection
-    if (!isRegistered) {
-        console.log("SQL 2");
-
         await db.query(`
             insert into questprogression (user_email, item_id)
-            values ($1, $2);
-        `, [email, itemId]);
+            select $1, $2
+            where not exists(select *
+                             from questprogression
+                             where user_email = $3
+                               and item_id = $4);
+        `, [email, itemId, email, itemId]);
     }
 
-
     // get size from collection that itemId is connected to
-    console.log("SQL 3");
+    console.log("SQL 2");
     {
         let queryResult = await db.query(`
             SELECT itemcount
@@ -71,7 +57,7 @@ export async function updateQuestItem(email, itemId, questId) {
     }
 
 // get array of itemId from quest that user have collected
-    console.log("SQL 4")
+    console.log("SQL 3")
     {
         let queryResult = await db.query(`
             SELECT q.item_id
@@ -85,14 +71,48 @@ export async function updateQuestItem(email, itemId, questId) {
         result.collected = queryResult.rows.map((item) => item.item_id);
     }
 
-// give reward to player
-    console.log("SQL 5");
+    // give reward to player
+    console.log("SQL 4");
     {
         let queryResult = await db.query(`
-        //     TODO need this for later :-)
-        `);
-    }
+            select count(q.item_id) as progression, q3.itemcount, q3.questreward_id
+            from questprogression as q
+                     join questitems q2 on q2.item_id = q.item_id
+                     join quests q3 on q3.quest_id = q2.quest_id
+            where user_email = $1
+              AND q2.quest_id = $2
+            group by q3.itemcount, q3.questreward_id;
+        `, [email, questId]);
 
+        let progression = queryResult.rows[0].progression;
+        let itemCount = queryResult.rows[0].itemcount;
+        let questRewardId = queryResult.rows[0].questreward_id;
+
+        // If user progression is complete, add picture to user gallery
+        // == is done on purposes, don't change!
+        if (progression == itemCount) {
+            console.log("SQL 5");
+            await db.query(`
+                insert into usergallery (user_email, reward_id)
+                select $1, $2
+                where not exists(select *
+                                 from usergallery
+                                 where user_email = $3
+                                   and reward_id = $4);
+            `, [email, questRewardId, email, questRewardId]);
+
+            console.log("SQL 6");
+            let queryResult = await db.query(`
+                select filename, picturetitle, picturedescription
+                from questrewards
+                where reward_id = $1;
+            `, [questRewardId]);
+
+            result.reward.filename = queryResult.rows[0].filename;
+            result.reward.picturetitle = queryResult.rows[0].picturetitle;
+            result.reward.picturedescription = queryResult.rows[0].picturedescription;
+        }
+    }
 
     return result;
 }
