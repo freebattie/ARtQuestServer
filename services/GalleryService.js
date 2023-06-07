@@ -18,7 +18,7 @@ export async function getRewardInformation(email, rewardId) {
         picturedescription: ""
     }
 
-    try {
+    {
         let queryResult = await db.query(`
             select filename, picturetitle, picturedescription
             from questrewards
@@ -36,9 +36,5 @@ export async function getRewardInformation(email, rewardId) {
         result.picturetitle = queryResult.rows[0].picturetitle;
         result.picturedescription = queryResult.rows[0].picturedescription;
         return result;
-
-    } catch (error) {
-        console.log("SQL error: ", error);
-        return 500;
     }
 }

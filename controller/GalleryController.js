@@ -29,19 +29,24 @@ export async function getRewardInformation(req, res) {
         return res.sendStatus(400);
 
     } else {
-        let rewardInformation = await Services.getRewardInformation(email, rewardId);
+        try {
+            let rewardInformation = await Services.getRewardInformation(email, rewardId);
 
-        // 403 forbidden
-        if (rewardInformation === 403) {
-            res.sendStatus(403)
+            // 403 forbidden
+            if (rewardInformation === 403) {
+                res.sendStatus(403)
 
-        } else if (rewardInformation === 500) {
-            // 500 internal server error
+            } else if (rewardInformation === 500) {
+                // 500 internal server error
+                res.sendStatus(500);
+
+            } else {
+                res.send(rewardInformation);
+            }
+
+        } catch (error) {
+            console.log("SQL error: ", error);
             res.sendStatus(500);
-
-        } else {
-            res.send(rewardInformation);
         }
-
     }
 }
