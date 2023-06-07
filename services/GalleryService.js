@@ -38,3 +38,37 @@ export async function getRewardInformation(email, rewardId) {
         return result;
     }
 }
+
+export async function  getAllRewardInformation(email){
+    console.log("getAllRewardInformation()");
+
+    let result = [];
+
+    console.log(email);
+
+    {
+        let queryResult = await db.query(`
+            select filename, picturetitle, picturedescription
+            from usergallery as g
+                     inner join questrewards q on q.reward_id = g.reward_id
+            where user_email = $1;
+        `, [email]);
+
+        console.log(queryResult);
+
+        for (let row of queryResult.rows) {
+            let picture = {
+                filename: row.filename,
+                picturetitle: row.picturetitle,
+                picturedescription: row.picturedescription
+            };
+
+            console.log("push");
+            result.push(picture);
+        }
+
+        console.log("return");
+        return result;
+    }
+
+}

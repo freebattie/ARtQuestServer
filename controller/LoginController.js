@@ -49,17 +49,17 @@ export async function login(req, res) {
 
         // 400 Bad Request
         if (rows.length < 1) {
-            res.sendStatus(400);
+            return res.sendStatus(400);
 
             //     User successful
         } else {
             res.cookie("email", rows[0].email, {signed: true});
             res.cookie("role", rows[0].role, {signed: true});
-            res.sendStatus(200);
+            return res.sendStatus(200);
         }
 
     } catch (error) {
         console.log("SQL error: ", error);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 }

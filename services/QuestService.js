@@ -89,7 +89,7 @@ export async function updateQuestItem(email, itemId, questId) {
     console.log("SQL 5");
     {
         let queryResult = await db.query(`
-            
+        //     TODO need this for later :-)
         `);
     }
 

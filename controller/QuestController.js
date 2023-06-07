@@ -29,19 +29,15 @@ export async function getAllQuests(req, res) {
         return res.sendStatus(400);
 
     } else {
-
         try {
+            let progress = await Services.getAllQuests(email);
+            return res.send(progress);
 
-        let progress = await Services.getAllQuests(email);
-
-        return res.send(progress);
-            
         } catch (error) {
             console.log("SQL error: ", error);
-            return(500);
+            return (500);
         }
     }
-
 }
 
 /**
@@ -64,17 +60,13 @@ export async function updateQuest(req, res) {
         return res.sendStatus(400);
 
     } else {
-
         try {
-        
-        let progress = await Services.updateQuestItem(email, item, quest);
-
-        return res.send(progress);
+            let progress = await Services.updateQuestItem(email, item, quest);
+            return res.send(progress);
 
         } catch (error) {
             console.log("SQL error: ", error);
             return res.sendStatus(500);
         }
-        
     }
 }
