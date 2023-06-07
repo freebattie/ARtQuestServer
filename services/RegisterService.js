@@ -33,16 +33,12 @@ export async function addUser(email, password, role) {
     console.log("addUser()");
     email = email.toLowerCase();
 
-    try {
+    {
         await db.query(
             "INSERT INTO users (email, password, role) VALUES ($1, $2, $3)",
             [email, password, role]
         );
 
-    } catch (error) {
-        console.log("Making user failed:", error);
-        return false;
-    }
-
     return true;
+}
 }
