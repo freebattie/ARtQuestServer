@@ -36,10 +36,6 @@ export async function getRewardInformation(req, res) {
             if (rewardInformation === 403) {
                 res.sendStatus(403)
 
-            } else if (rewardInformation === 500) {
-                // 500 internal server error
-                res.sendStatus(500);
-
             } else {
                 res.send(rewardInformation);
             }

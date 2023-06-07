@@ -106,7 +106,7 @@ export async function getAllQuests(email) {
     let results = [];
 
     // Get all quests
-    try {
+    {
         let queryResult = await db.query(`
             select quest_id, galleryname, itemcount
             from quests;
@@ -120,14 +120,10 @@ export async function getAllQuests(email) {
                 collected: [],
             })
         }
-
-    } catch (error) {
-        console.log("SQL 1 error: ", error);
-        return 500;
     }
 
     // Fill in found quest items for each quests
-    try {
+    {
         let queryResult = await db.query(`
             SELECT q2.quest_id, q.item_id
             FROM questprogression as q
@@ -152,11 +148,6 @@ export async function getAllQuests(email) {
             console.log(results);
         }
         results[resultsIndex].collected = tmpArray;
-
-
-    } catch (error) {
-        console.log("SQL 2 error: ", error);
-        return 500;
     }
 
     return results;
