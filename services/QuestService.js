@@ -152,22 +152,24 @@ export async function getAllQuests(email) {
             order by quest_id;
         `, [email]);
 
-        let currentQuest = queryResult.rows[0].quest_id;
-        let tmpArray = [];
-        let resultsIndex = 0;
+        if (queryResult.rowCount > 0) {
+            let currentQuest = queryResult.rows[0].quest_id;
+            let tmpArray = [];
+            let resultsIndex = 0;
 
-        for (let row of queryResult.rows) {
-            if (currentQuest !== row.quest_id) {
-                currentQuest = row.quest_id;
-                results[resultsIndex].collected = tmpArray;
-                resultsIndex++;
-                tmpArray = [];
+            for (let row of queryResult.rows) {
+                if (currentQuest !== row.quest_id) {
+                    currentQuest = row.quest_id;
+                    results[resultsIndex].collected = tmpArray;
+                    resultsIndex++;
+                    tmpArray = [];
+                }
+
+                tmpArray.push(row.item_id);
+                console.log(results);
             }
-
-            tmpArray.push(row.item_id);
-            console.log(results);
+            results[resultsIndex].collected = tmpArray;
         }
-        results[resultsIndex].collected = tmpArray;
     }
 
     return results;
