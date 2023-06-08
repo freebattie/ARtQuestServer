@@ -35,7 +35,7 @@ APP.use(async (req, res, next) => {
 routes(APP);
 
 // Server Setup
-const PORT = process.env.PORT || 8070;
+const PORT = process.env.PORT || 8080;
 const SERVER = http.createServer(APP);
 
 SERVER.listen(PORT);
