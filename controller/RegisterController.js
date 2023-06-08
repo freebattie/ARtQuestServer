@@ -36,7 +36,7 @@ export async function register(req, res) {
 
         // Create user
     // Role is hardcoded because the registration form is only for normal users
-    else if ((await Services.addUser(email, password, "casual")) === true) {
+    else if ((await Services.addUser(email, password, "user")) === true) {
         res.sendStatus(200);
     }
         
