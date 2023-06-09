@@ -15,7 +15,7 @@ import * as db from "../db/index.js";
  * @param       rewardId - int
  * @return      json object with filname, picturetitle and picutre description*/
 export async function getRewardInformation(email, rewardId) {
-    console.log("getRewardInformation");
+    console.log("getRewardInformation()");
 
     let result = {
         filename: "",
@@ -32,8 +32,8 @@ export async function getRewardInformation(email, rewardId) {
               and u.reward_id = $2;
         `, [email, rewardId]);
 
-        // 403 forbidden
         if (queryResult < 1) {
+            // 403 forbidden
             return 403;
         }
 
@@ -49,11 +49,11 @@ export async function getRewardInformation(email, rewardId) {
  * @description get all information about all the reward user have
  * @param       email - string
  * @return      json object what has a array of object describing the rewards*/
-export async function  getAllRewardInformation(email){
+export async function getAllRewardInformation(email) {
     console.log("getAllRewardInformation()");
 
     let result = [];
-    
+
     {
         let queryResult = await db.query(`
             select filename, picturetitle, picturedescription
@@ -61,7 +61,7 @@ export async function  getAllRewardInformation(email){
                      inner join questrewards q on q.reward_id = g.reward_id
             where user_email = $1;
         `, [email]);
-        
+
         for (let row of queryResult.rows) {
             let picture = {
                 filename: row.filename,

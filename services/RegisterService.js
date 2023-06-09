@@ -15,11 +15,10 @@ import * as db from "../db/index.js";
  * @param       email - string with users email
  * @return      db result */
 export async function userExists(email) {
+    console.log("userExists()");
     email = email.toLowerCase();
 
     let result = await db.query("SELECT * FROM users WHERE email = $1;", [email]);
-    console.debug(result);
-    console.log("userExists() ->  count > " + result.rowCount);
     return result.rowCount > 0;
 }
 
@@ -33,12 +32,10 @@ export async function addUser(email, password, role) {
     console.log("addUser()");
     email = email.toLowerCase();
 
-    {
-        await db.query(
-            "INSERT INTO users (email, password, role) VALUES ($1, $2, $3)",
-            [email, password, role]
-        );
+    await db.query(
+        "INSERT INTO users (email, password, role) VALUES ($1, $2, $3)",
+        [email, password, role]
+    );
 
     return true;
-}
 }

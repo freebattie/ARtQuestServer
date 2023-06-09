@@ -9,7 +9,6 @@
 
 
 import * as Services from "../services/LoginService.js";
-import e from "express";
 
 /**
  * @description takes a cookie for approval and adds it to the requests (for the next task in line)
@@ -21,7 +20,14 @@ export async function requestUser(req, res, next) {
     console.log("requestUser()");
 
     const {email} = req.signedCookies;
-    const {rows} = await Services.requestUser(email);
+    let rows;
+
+    try {
+        rows = await Services.requestUser(email);
+    } catch (error) {
+        console.log("SQL error: ", error);
+        res.sendStatus(500);
+    }
 
     if (rows.length > 0) {
         req.user = {email: rows[0].email, role: rows[0].role};
@@ -39,8 +45,8 @@ export async function login(req, res) {
 
     const {email, password} = req.body;
 
-    // 400 bad request
     if (email === "" || password === "") {
+        // 400 bad request
         return res.sendStatus(400);
     }
 
@@ -48,12 +54,12 @@ export async function login(req, res) {
         // Check user to database
         const {rows} = await Services.loginUser(email, password);
 
-        // 400 Bad Request
         if (rows.length < 1) {
+            // 400 Bad Request
             return res.sendStatus(400);
 
-            //     User successful
         } else {
+            // Successful login
             res.cookie("email", rows[0].email, {signed: true});
             res.cookie("role", rows[0].role, {signed: true});
             return res.sendStatus(200);

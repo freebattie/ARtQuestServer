@@ -10,12 +10,12 @@
 import * as Services from "../services/GalleryService.js";
 
 /**
- * @description return information about reward (painting)
+ * @description returns information about single reward (painting)
  * @param       req - The whole received HTTP message with headers and body
  * @param       res - The whole responding HTTP message with headers and body
  * @return      async return with http response */
 export async function getSingleRewardInformation(req, res) {
-    console.log("getPaintingInformation()");
+    console.log("getSingleRewardInformation()");
 
     const {email} = req.signedCookies;
     const {rewardId} = req.params;
@@ -47,6 +47,12 @@ export async function getSingleRewardInformation(req, res) {
     }
 }
 
+
+/**
+ * @description returns information about every reward user have access to (paintings)
+ * @param       req - The whole received HTTP message with headers and body
+ * @param       res - The whole responding HTTP message with headers and body
+ * @return      async return with http response */
 export async function getAllRewardInformation(req, res) {
     console.log("getAllRewardInformation()");
 

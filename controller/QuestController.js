@@ -21,11 +21,11 @@ export async function getAllQuests(req, res) {
     const {quest} = req.body;
 
     if (!email) {
-        // 403 forbidden
+        // 403 Forbidden
         return res.sendStatus(403);
 
     } else if (quest === "") {
-        // Bad request
+        // 400 Bad request
         return res.sendStatus(400);
 
     } else {
@@ -52,11 +52,11 @@ export async function updateQuest(req, res) {
     const {quest, item} = req.body;
 
     if (!email) {
-        // 403 forbidden
+        // 403 Forbidden
         return res.sendStatus(403);
 
     } else if (quest === "" || item === "") {
-        // Bad request
+        // 400 Bad request
         return res.sendStatus(400);
 
     } else {
