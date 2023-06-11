@@ -1,0 +1,2 @@
+truncate questprogression;
+truncate usergallery;
