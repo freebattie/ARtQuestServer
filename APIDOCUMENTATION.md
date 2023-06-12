@@ -1,5 +1,7 @@
 # API Documentation
 
+These are the endpoints for the ARtQuestServer API. All routes are prefixed with `/api/` and all data sendt are formatted in JSON.
+
 All routes may return `500 internal server errror`
 
 ## POST /api/login
@@ -59,6 +61,11 @@ The server responds with:
     "quest": 1, // quest id
     "size": 10, // total items to collect
     "collected": [1, 2], // ids of the collected items
+   "reward": {
+      "filename": "image.png"
+      "name": "Scream",
+      "description": "Here be The Scream",
+   }
 }
 
 ```
@@ -83,11 +90,6 @@ The server responds with:
    "quest": 0,
    "size": 10,
    "collected": [3, 1],
-   "reward": {
-      "filename": "image.png"
-      "name": "Scream",
-      "description": "Here be The Scream",
-   }
 }
 
 ```
@@ -105,9 +107,9 @@ The server responds with:
 
 ```json
    {
-      "title": "The Squeek",
-      "description": "A bridge with a squeeking person",
-      "filename": "squeekerfile"
+      "filename": "squeekerfile",
+      "picturetitle": "The Squeek",
+      "picturedescription": "A bridge with a squeeking person",
    }
 ```
 
@@ -125,14 +127,14 @@ The server responds with:
 ```json
    [
       {
-         "title": "The Squeek",
-         "description": "A bridge with a squeeking person",
-         "filename": "squeekerfile"
+         "filename": "squeekerfile",
+         "picturetitle": "The Squeek",
+         "picturedescription": "A bridge with a squeeking person",
       },
       {
-         "title": "The Squeek2",
-         "description": "A bridge with a second squeeking person",
-         "filename": "squeekerfile2"
+         "filename": "squeekerfile2",
+         "picturetitle": "The Squeek2",
+         "picturedescription": "A bridge with a second squeeking person",
       }
    ]
 ```
