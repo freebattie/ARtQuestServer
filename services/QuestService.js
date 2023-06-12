@@ -8,6 +8,7 @@
  * */
 
 import * as db from "../db/index.js";
+import {sendPromoMail} from "../lib/mail.js";
 
 /**
  * @description takes in email and itemId from user to update db about progression
@@ -112,6 +113,12 @@ export async function updateQuestItem(email, itemId, questId) {
             result.reward.picturetitle = queryResult.rows[0].picturetitle;
             result.reward.picturedescription = queryResult.rows[0].picturedescription;
         }
+    }
+
+    // sends promo epost to user when finised collecting all items
+    // this is here only because showing of feature when going through a demo
+    if (result.collected.length === result.size) {
+        sendPromoMail(email);
     }
 
     return result;

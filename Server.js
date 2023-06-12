@@ -24,7 +24,6 @@ import cookies from "cookie-parser";
 import { sendPromoMail } from "./lib/mail.js";
 
 const APP = express();
-console.log("adasdads");
 APP.use(bodyParser.json({ urlencoded: { extended: true } }));
 
 //APP.use(express.static(path.join(__DIRNAME, "/public"))); // Needed if we want to send pictures
