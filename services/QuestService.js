@@ -123,9 +123,11 @@ export async function updateQuestItem(email, itemId, questId) {
  * @param       email - string
  * @return      array of quest object with progression */
 export async function getAllQuests(email) {
+    console.log("getAllQuests()");
     let results = [];
 
     // Get all quests
+    console.log("SQL 1");
     {
         let queryResult = await db.query(`
             select quest_id, galleryname, itemcount
@@ -143,6 +145,7 @@ export async function getAllQuests(email) {
     }
 
     // Fill in found quest items for each quests
+    console.log("SQL 2");
     {
         let queryResult = await db.query(`
             SELECT q2.quest_id, q.item_id

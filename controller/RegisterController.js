@@ -20,26 +20,26 @@ export async function register(req, res) {
     // Verify username
     const {email, password} = req.body;
 
-    // 403 forbidden
     if (email === "" || password === "") {
+        // 403 forbidden
         return res.sendStatus(403);
     }
 
     try {
-    
-    let exists = await Services.userExists(email);
-    console.log("User does " + (exists ? "" : "not ") + "exist");
-    if (exists) {
-        res.status(409);
-        res.send("User already exists");
-    }
+        let exists = await Services.userExists(email);
+        console.log("User does " + (exists ? "" : "not ") + "exist");
+        if (exists) {
+            // 409 Conflict
+            res.status(409);
+            res.send("User already exists");
+        }
 
-        // Create user
-    // Role is hardcoded because the registration form is only for normal users
-    else if ((await Services.addUser(email, password, "casual")) === true) {
-        res.sendStatus(200);
-    }
-        
+            // Create user
+        // Role is hardcoded because the registration form is only for normal users
+        else if ((await Services.addUser(email, password, "user")) === true) {
+            res.sendStatus(200);
+        }
+
     } catch (error) {
         console.log("SQL error: ", error);
         return res.sendStatus(500);

@@ -16,13 +16,9 @@ import * as db from "../db/index.js";
 export async function requestUser(email) {
     console.log("requestUser()");
 
-    try {
-        return await db.query("Select * from users where email = $1", [
-            email,
-        ]);
-    } catch (error) {
-        console.log("requestUser error: ", error);
-    }
+    return await db.query("Select * from users where email = $1", [
+        email,
+    ]);
 }
 
 /**
@@ -33,11 +29,9 @@ export async function requestUser(email) {
 export async function loginUser(email, password) {
     console.log("loginUser()");
 
-    {
-        return await db.query(
-            "Select * from users where email = $1 AND password = $2",
-            [email, password]
-        );
-    }
+    return await db.query(
+        "Select * from users where email = $1 AND password = $2",
+        [email, password]
+    );
 }
 
