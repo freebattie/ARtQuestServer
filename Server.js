@@ -21,26 +21,26 @@ import routes from "./Routes.js";
 import http from "http";
 import bodyParser from "body-parser";
 import cookies from "cookie-parser";
+import { sendPromoMail } from "./lib/mail.js";
 
 const APP = express();
 console.log("adasdads");
-APP.use(bodyParser.json({urlencoded:{ extended: true }}));
-
+APP.use(bodyParser.json({ urlencoded: { extended: true } }));
 
 //APP.use(express.static(path.join(__DIRNAME, "/public"))); // Needed if we want to send pictures
 APP.use(cookies(process.env.COOKIE_SECRET));
 APP.use(async (err, req, res, next) => {
-    console.log(`${req.ip}: ${req.method} ${req.url}`);
+  console.log(`${req.ip}: ${req.method} ${req.url}`);
 
-    // Error handling for malformed http message (mainly aimed for json errors)
-    if (err instanceof SyntaxError && 'body' in err) {
-        console.log("Bad syntax in request!");
-        // 400 Bad request
-        return res.sendStatus(400);
-    }
+  // Error handling for malformed http message (mainly aimed for json errors)
+  if (err instanceof SyntaxError && "body" in err) {
+    console.log("Bad syntax in request!");
+    // 400 Bad request
+    return res.sendStatus(400);
+  }
 
-    next();
-    console.log(`${req.ip}: ${res.statusCode}`);
+  next();
+  console.log(`${req.ip}: ${res.statusCode}`);
 });
 routes(APP);
 
