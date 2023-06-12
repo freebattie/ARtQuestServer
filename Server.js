@@ -9,11 +9,11 @@
 
 import dotenv from "dotenv";
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+// import {fileURLToPath} from "url"; // Needed if we want to send pictures
+// import path from "path"; // Needed if we want to send pictures
 
-const __FILENAME = fileURLToPath(import.meta.url);
-const __DIRNAME = path.dirname(__FILENAME);
+// const __FILENAME = fileURLToPath(import.meta.url); // Needed if we want to send pictures
+// const __DIRNAME = path.dirname(__FILENAME); // Needed if we want to send pictures
 
 dotenv.config();
 
@@ -24,19 +24,28 @@ import cookies from "cookie-parser";
 import { sendPromoMail } from "./lib/mail.js";
 
 const APP = express();
-APP.use(bodyParser.json({ type: "*/*" }));
-sendPromoMail("bjartenerland5@hotmail.com");
-//APP.use(express.static(path.join(__DIRNAME, "/public"))); If we want to sent img etc from server
+console.log("adasdads");
+APP.use(bodyParser.json({ urlencoded: { extended: true } }));
+
+//APP.use(express.static(path.join(__DIRNAME, "/public"))); // Needed if we want to send pictures
 APP.use(cookies(process.env.COOKIE_SECRET));
-APP.use(async (req, res, next) => {
+APP.use(async (err, req, res, next) => {
   console.log(`${req.ip}: ${req.method} ${req.url}`);
+
+  // Error handling for malformed http message (mainly aimed for json errors)
+  if (err instanceof SyntaxError && "body" in err) {
+    console.log("Bad syntax in request!");
+    // 400 Bad request
+    return res.sendStatus(400);
+  }
+
   next();
   console.log(`${req.ip}: ${res.statusCode}`);
 });
 routes(APP);
 
 // Server Setup
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9000;
 const SERVER = http.createServer(APP);
 
 SERVER.listen(PORT);
