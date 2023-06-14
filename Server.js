@@ -28,6 +28,7 @@ APP.use(bodyParser.json({ urlencoded: { extended: true } }));
 
 //APP.use(express.static(path.join(__DIRNAME, "/public"))); // Needed if we want to send pictures
 APP.use(cookies(process.env.COOKIE_SECRET));
+//sendPromoMail("bjartenerland5@hotmail.com");
 APP.use(async (err, req, res, next) => {
   console.log(`${req.ip}: ${req.method} ${req.url}`);
 
