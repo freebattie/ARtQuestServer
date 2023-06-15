@@ -137,7 +137,7 @@ export async function updateQuestItem(email, itemId, questId) {
   // this is here only because showing of feature when going through a demo
   //TODO: REMOVE THIS PLS
   if (result.collected.length === result.size) {
-    sendPromoMail(email);
+    //sendPromoMail(email);
   }
 
   return result;
